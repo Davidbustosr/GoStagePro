@@ -1,7 +1,4 @@
 import Image from "next/image";
-import blogSmallImage1 from "@/assets/img/blog/blog__small__1.png";
-import blogSmallImage2 from "@/assets/img/blog/blog__small__2.png";
-import blogSmallImage3 from "@/assets/img/blog/blog__small__3.png";
 import Link from "next/link";
 
 const RecentPosts = () => {

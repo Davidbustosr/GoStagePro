@@ -1,5 +1,4 @@
-import blogImage7 from "@/assets/img/blog/blog__7.png";
-import blogImage8 from "@/assets/img/blog/blog__8.png";
+
 import blogBgImage2 from "@/assets/img/blog/blog__bg_2.png";
 
 import ButtonPrimary from "@/components/shared/buttons/ButtonPrimary";

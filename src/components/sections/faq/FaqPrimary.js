@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import contactImage2 from "@/assets/img/contact/contact__2.png";
+
 import useSearch from "@/hooks/useSearch";
 import CommonContext from "@/providers/CommonContext";
 import BlogSidebar from "@/components/shared/sidebars/BlogSidebar";

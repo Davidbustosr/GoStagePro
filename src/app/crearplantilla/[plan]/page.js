@@ -4,7 +4,6 @@
 // Importaciones necesarias
 import Image from "next/image"; // Componente de Next.js para manejar imágenes optimizadas
 import React, { useState } from "react"; // Importamos useState para manejar estados en el componente
-import InstrumentDetails from "@/components/shared/sidebars/widgets/InstrumentDetails"; // Componente para mostrar detalles de los instrumentos
 import instrumentData from "@/intrumentos-audios/instrumentdata"; // Datos relacionados con instrumentos y audios
 
 // Mockups por estado para cada plan (con rutas de imágenes)
@@ -109,9 +108,7 @@ const CrearPlantillaPage = ({ params }) => {
             <h3 style={{ color: "#e43f5a", textAlign: "left" }}>
               {instrument.charAt(0).toUpperCase() + instrument.slice(1)}
             </h3>
-            {/* Detalles del instrumento */}
-            <InstrumentDetails category={instrument} />
-            {/* Botón para seleccionar el instrumento */}
+          
             <button
               onClick={() => handleInstrumentSelect(instrument)}
               className="btn"

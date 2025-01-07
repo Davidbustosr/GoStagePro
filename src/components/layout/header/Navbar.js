@@ -4,11 +4,25 @@ import DropdownPages from "./DropdownPages"; // Componente para el dropdown de "
 import DropdownEcommerce from "./DropdownEcommerce"; // Componente para el dropdown de "Ecommerce"
 import NavItem from "./NavItem"; // Componente para representar cada elemento del menú
 import { useHeaderContex } from "@/providers/HeaderContex"; // Hook para obtener contexto del encabezado
-
+import { useState, useEffect } from "react"; // Asegúrate de importar useState
+import Link from "next/link"; // Importa el componente Link de next/link
 // Componente principal del menú de navegación
 const Navbar = () => {
   // Obtiene configuraciones y datos desde el contexto del encabezado
   const { isOnepage, style, headerType, footerStyle, isCollection, home } = useHeaderContex();
+
+   // Estado para manejar si el usuario está logueado
+   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    // Verificar si el usuario está logueado usando el token
+  useEffect(() => {
+    const token = localStorage.getItem("authToken"); // Obtiene el token del localStorage
+    if (token) {
+      setIsLoggedIn(true); // Si el token existe, el usuario está logueado
+    } else {
+      setIsLoggedIn(false); // Si no existe el token, el usuario no está logueado
+    }
+  }, []); // El efecto se ejecuta solo una vez al montar el componente
 
   // Define los elementos crudos del menú con propiedades dinámicas basadas en el contexto
   const navItemsRaw = [
@@ -57,6 +71,11 @@ const Navbar = () => {
           title: "COMIENZA AQUI", // Título del dropdown
           dropdownItems: [
             {
+              name: "Crear plantilla", // Nombre del enlace
+              path: "/wishlist", // Ruta del enlace
+              label: null, // Etiqueta adicional, en este caso vacía
+            },
+            {
               name: "Explorar Planes", // Nombre del enlace
               path: "/blogs/1", // Ruta del enlace
               label: null, // Etiqueta adicional, en este caso vacía
@@ -83,7 +102,7 @@ const Navbar = () => {
           dropdownItems: [
             {
               name: "¿Como crear una plantilla?",
-              path: "/services",
+              path: "#",
               label: "Guia", // Etiqueta indicando que es una guía
             },
           ],
@@ -250,7 +269,8 @@ const navItems = navItemsRaw?.map((navItem, idx) =>
           <ul>
             {navItems?.map((navItem, idx) => (
               <NavItem key={idx} item={navItem} />
-            ))} {/* Renderiza cada elemento del menú */}
+            ))} 
+            
           </ul>
         </nav>
       </div>

@@ -168,8 +168,7 @@ const BlogDetailsPrimary = () => {
                 data-aos-duration="1500"
               >
                 <p>
-                  Explora las posibilidades y lleva tus proyectos al siguiente
-                  nivel con las herramientas adecuadas para tus necesidades.
+                 
                 </p>
               </div>
 

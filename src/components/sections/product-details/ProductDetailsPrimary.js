@@ -215,7 +215,7 @@ const ProductDetailsPrimary = () => {
                 {/* Botón para comprar directamente */}
                 <div className="featurearea__bottom__button">
                   <Link href={`/checkout?id=${id}&quantity=${quantity}`}>
-                    Buy it now
+                    CREAR PLANTILLA
                   </Link>
                 </div>
               </div>

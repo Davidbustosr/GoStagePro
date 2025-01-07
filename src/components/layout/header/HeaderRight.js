@@ -3,9 +3,27 @@ import CartHeader from "./CartHeader";
 import ButtonPrimary from "@/components/shared/buttons/ButtonPrimary";
 import { useHeaderContex } from "@/providers/HeaderContex";
 import SocialHeader from "./SocialHeader";
+import { useState, useEffect } from "react";
 
 const HeaderRight = () => {
   const { style } = useHeaderContex();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Verificar si hay un token de autenticación en el localStorage
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    setIsLoggedIn(!!token); // Si existe un token, el usuario está logueado
+  }, []);
+
+  // Manejar el logout
+  const handleLogout = () => {
+    console.log("Antes de eliminar:", localStorage.getItem("authToken")); // Verificar si el token existe
+    localStorage.removeItem("authToken");
+    console.log("Después de eliminar:", localStorage.getItem("authToken")); // Debería ser null o undefined
+    setIsLoggedIn(false);
+    window.location.reload(); // Refresca la página para reflejar cambios
+  };
+
   return (
     <div className="headerarea__component">
       <div className="headerarea__right">
@@ -13,6 +31,7 @@ const HeaderRight = () => {
           <SocialHeader />
         ) : (
           <>
+            {/* Carrito */}
             <div className="headerarea__cart__wraper">
               <div className="headerarea__cart__icon">
                 <Link href="#">
@@ -60,16 +79,96 @@ const HeaderRight = () => {
 
               <CartHeader />
             </div>
+
+            {/* Botón o menú de usuario */}
             <div className="headerarea__button">
-              <ButtonPrimary
-                text="Ingresar"
-                button={!style ? "" : "white"}
-                path="/login"
-              />
+              {isLoggedIn ? (
+                <div className="menu-container">
+                  <button className="menu-button">
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                      alt="Usuario"
+                      width="30"
+                      height="30"
+                      style={{ borderRadius: "50%" }}
+                    />
+                  </button>
+                  <div className="menu-dropdown">
+                    <div className="menu-items">
+                      <Link href="#" className="menu-item">
+                        Mi cuenta
+                      </Link>
+                      <Link href="/wishlist" className="menu-item">
+                        Crear plantilla
+                      </Link>
+                      <button onClick={handleLogout} className="menu-item logout">
+                        Cerrar sesión
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <ButtonPrimary
+                  text="Ingresar"
+                  button={!style ? "" : "white"}
+                  path="/login"
+                />
+              )}
             </div>
           </>
         )}
       </div>
+
+      {/* Estilo del menú desplegable */}
+      <style jsx>{`
+        .menu-container {
+          position: relative;
+        }
+
+        .menu-button {
+          background: none;
+          border: none;
+          cursor: pointer;
+        }
+
+        .menu-dropdown {
+          display: none;
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background-color: #333; /* Fondo gris oscuro */
+          border-radius: 8px;
+          box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+          width: 220px;
+          z-index: 10;
+        }
+
+        .menu-container:hover .menu-dropdown {
+          display: block;
+        }
+
+        .menu-items {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .menu-item {
+          padding: 10px 15px;
+          text-align: left;
+          text-decoration: none;
+          color: white !important; /* Letras blancas */
+          font-size: 14px;
+          cursor: pointer;
+        }
+
+        .menu-item:hover {
+          background-color: #444; /* Hover gris más oscuro */
+        }
+
+        .logout {
+          border-top: 1px solid #555;
+        }
+      `}</style>
     </div>
   );
 };

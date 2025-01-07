@@ -1,6 +1,5 @@
-import Link from "next/link";
-
-const { default: Image } = require("next/image");
+import Link from "next/link"; // Importa Link desde Next.js
+import Image from "next/image"; // Cambia require por import
 
 const ProjectCard2 = ({ project, type }) => {
   const { title, id, duration, img } = project;

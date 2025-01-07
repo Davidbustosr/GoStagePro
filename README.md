@@ -8,7 +8,7 @@ Go Stage Pro es una aplicación web diseñada para facilitar la creación de pla
 - **Creación de plantillas personalizadas:** Los usuarios pueden seleccionar instrumentos, configuraciones y sonidos según su plan.
 - **Gestión de cuentas:** Los usuarios pueden registrarse, iniciar sesión y gestionar sus datos.
 - **Planes de suscripción:** Diferentes niveles de acceso, desde básico hasta profesional.
-- **Carrito de compras y checkout:** Implementación de integración con PayPal y Stripe (en desarrollo para producción).
+- **Carrito de compras y checkout:** Implementación de integración con PayPal (en desarrollo para producción).
 - **Galería y blogs:** Acceso a contenido multimedia y artículos relacionados con la industria musical.
 - **Soporte interactivo:** Preguntas frecuentes, contacto directo y newsletter.
 
@@ -20,7 +20,7 @@ Go Stage Pro es una aplicación web diseñada para facilitar la creación de pla
 - **Node.js:** v16 o superior
 - **MongoDB Atlas:** Configurado para la base de datos en la nube
 - **Git:** Para clonar el repositorio
-- **PayPal y Stripe:** Credenciales configuradas (sandbox o producción)
+- **PayPal:** Credenciales configuradas (sandbox o producción)
 
 ### Clonar el repositorio
 ```bash
@@ -59,6 +59,7 @@ npm install
 npm run dev
 ```
 La aplicación estará disponible en [http://localhost:3000](http://localhost:3000).
+La aplicacion funciona con base de datos en mongodb en puerto 5001.
 
 ## 📂 Estructura del proyecto
 - **/src:** Código fuente de la aplicación
@@ -72,12 +73,13 @@ La aplicación estará disponible en [http://localhost:3000](http://localhost:30
 - **Frontend:** Next.js, React
 - **Backend:** Node.js, Express.js
 - **Base de datos:** MongoDB Atlas
-- **Pasarelas de pago:** PayPal, Stripe
+- **Pasarelas de pago:** PayPal.
 
 ## ⚙️ Aspectos en desarrollo
 - Optimización del flujo de checkout para producción.
 - Mejoras en el diseño responsivo de algunas páginas.
 - Documentación interna para nuevos colaboradores.
+- Creacion de plantillas 
 
 ## 🤝 Contribución
 Si deseas contribuir al desarrollo de esta aplicación, ¡bienvenido! Por favor, envía un pull request o contacta al autor directamente.
@@ -87,4 +89,4 @@ Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para má
 
 ---
 
-> **Nota final:** Este proyecto se desarrolló en paralelo como parte de un trabajo universitario y un proyecto personal. Por ello, algunos aspectos se ajustaron para cumplir con plazos estrictos de entrega.
+> **Nota final:** Este proyecto se desarrolló en paralelo como parte de un trabajo universitario y un proyecto personal. Por ello, algunos aspectos se ajustaron para cumplir con plazos estrictos de entrega, por lo que algunas partes de la pagina no tienen un complet desarrollo visual.

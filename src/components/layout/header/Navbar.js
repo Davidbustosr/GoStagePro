@@ -71,11 +71,6 @@ const Navbar = () => {
           title: "COMIENZA AQUI", // Título del dropdown
           dropdownItems: [
             {
-              name: "Crear plantilla", // Nombre del enlace
-              path: "/wishlist", // Ruta del enlace
-              label: null, // Etiqueta adicional, en este caso vacía
-            },
-            {
               name: "Explorar Planes", // Nombre del enlace
               path: "/blogs/1", // Ruta del enlace
               label: null, // Etiqueta adicional, en este caso vacía

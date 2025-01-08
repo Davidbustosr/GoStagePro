@@ -31,8 +31,8 @@ const inter = Inter({
 
 // Metadatos de la aplicación (usados para SEO y etiquetas de la página)
 export const metadata = {
-  title: "Home 1 | Bastun- Business Consulting Next Js Template",
-  description: "Home 1 | Bastun- Business Consulting Next Js Template",
+  title: "Home 1 | ",
+  description: "Home 1 | ",
 };
 
 // 1) Importa ClientProviders

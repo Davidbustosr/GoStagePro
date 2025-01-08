@@ -36,7 +36,7 @@ export const metadata = {
 };
 
 // 1) Importa ClientProviders
-import ClientProviders from "./clientproviders";
+import ClientProviders from "./ClientProviders";
 
 // Define el diseño raíz para toda la aplicación
 export default function RootLayout({ children }) {

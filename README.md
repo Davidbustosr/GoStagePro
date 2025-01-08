@@ -1,7 +1,7 @@
 
 # Go Stage Pro - Aplicación Web para Músicos y Profesionales del Sonido 🎵
 
-Go Stage Pro es una aplicación web diseñada para facilitar la creación de plantillas profesionales de MainStage para músicos, líderes de adoración y artistas en general. Este proyecto no solo busca optimizar la experiencia en el escenario, sino también simplificar el acceso a sonidos personalizados, configuraciones avanzadas y herramientas interactivas.
+Go Stage Pro es una aplicación web diseñada para facilitar la creación de plantillas profesionales de MainStage para músicos, líderes de adoración y artistas en general. Este proyecto no solo busca optimizar la experiencia en el escenario, sino también simplificar el acceso a sonidos personalizados, configuraciones avanzadas y herramientas interactivas. https://go-stage-pro.vercel.app/
 
 ## 🚀 Características principales
 

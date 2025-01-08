@@ -1,89 +1,30 @@
 "use client";
+import { PayPalButtons } from "@paypal/react-paypal-js"; 
 import countTotalPrice from "@/libs/countTotalPrice";
 import getAllProducts from "@/libs/getAllProducts";
 import { useCartContext } from "@/providers/CartContext";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
 const ChecoutPrimary = () => {
+  // ============================================================
+  // = LÓGICA PARA CALCULAR EL TOTAL =
+  // ============================================================
   const allProducts = getAllProducts();
   const searchParams = useSearchParams();
   const currentId = parseInt(searchParams.get("id"));
   const currentQuantity = parseInt(searchParams.get("quantity"));
   const { cartProducts: products } = useCartContext();
   const currentProduct = allProducts?.find(({ id }) => id === currentId);
+
   const subtotal = countTotalPrice(
     currentId ? [{ ...currentProduct, quantity: currentQuantity }] : products
   );
   const totalPrice = subtotal ? subtotal : 0;
 
-  // Referencia para renderizar los botones de PayPal
-  const paypalRef = useRef(null);
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src =
-      "https://www.paypal.com/sdk/js?client-id=AbRtp4tycN7z0V9PZhWawEgZs_R8yj6wIlsd54DQKuaySBrOOiiN5E4ToHAiOyuTDDuHtSTgRaJ3xTOb&currency=USD";
-    script.async = true;
-
-    script.onload = () => {
-      console.log("PayPal SDK cargado correctamente.");
-      if (window.paypal) {
-        window.paypal
-          .Buttons({
-            style: {
-              shape: "rect",
-              color: "gold",
-              layout: "vertical",
-              label: "paypal",
-            },
-            createOrder: async () => {
-              const response = await fetch("/api/paypal/create-order", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ total: totalPrice }),
-              });
-              const orderData = await response.json();
-              console.log("Orden creada:", orderData);
-              return orderData.id; // Devuelve el ID de la orden creada
-            },
-            onApprove: async (data) => {
-              const response = await fetch(`/api/paypal/capture-order`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ orderID: data.orderID }),
-              });
-              const orderData = await response.json();
-
-              if (orderData.error) {
-                console.error("Error en la captura del pago:", orderData.error);
-                window.location.href = "/error";
-              } else {
-                console.log("Pago capturado exitosamente:", orderData);
-                window.location.href = "/success"; // Redirige al éxito
-              }
-            },
-            onError: (err) => {
-              console.error("Error en el pago:", err);
-              window.location.href = "/error"; // Redirige al error
-            },
-          })
-          .render(paypalRef.current); // Renderiza el botón de PayPal
-      }
-    };
-
-    script.onerror = () => {
-      console.error("Error al cargar el SDK de PayPal.");
-    };
-
-    document.body.appendChild(script);
-
-    return () => {
-      // Limpia el script si el componente se desmonta
-      document.body.removeChild(script);
-    };
-  }, [totalPrice]);
-
+  // ============================================================
+  // = RENDER =
+  // ============================================================
   return (
     <div className="checkoutarea sp_bottom_140 sp_top_100">
       <div className="container">
@@ -95,12 +36,12 @@ const ChecoutPrimary = () => {
                 <h3>Resumen de la Compra</h3>
                 <div
                   style={{
-                    backgroundColor: "#ffffff", // Fondo blanco
-                    padding: "20px", // Espaciado interno
-                    borderRadius: "8px", // Bordes redondeados
-                    border: "1px solid #ddd", // Borde gris tenue
-                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)", // Sombra sutil
-                    marginBottom: "20px", // Espaciado inferior
+                    backgroundColor: "#ffffff",
+                    padding: "20px",
+                    borderRadius: "8px",
+                    border: "1px solid #ddd",
+                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                    marginBottom: "20px",
                   }}
                 >
                   <table className="checkoutarea__table" style={{ width: "100%" }}>
@@ -152,8 +93,43 @@ const ChecoutPrimary = () => {
                   marginTop: "20px",
                 }}
               >
-                {/* Renderiza el botón de PayPal */}
-                <div ref={paypalRef}></div>
+                {/* Botón de PayPal */}
+                <PayPalButtons
+                  style={{ layout: "vertical", color: "gold" }}
+                  createOrder={async () => {
+                    // Llamas a tu API para crear la orden
+                    // (usa tu endpoint /api/paypal/create-order como hacías antes)
+                    const response = await fetch("/api/paypal/create-order", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ total: totalPrice }),
+                    });
+                    const orderData = await response.json();
+                    console.log("Orden creada:", orderData);
+                    return orderData.id; // Devuelve el ID de la orden creada
+                  }}
+                  onApprove={async (data) => {
+                    // Llamas a tu API para capturar la orden
+                    const response = await fetch(`/api/paypal/capture-order`, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ orderID: data.orderID }),
+                    });
+                    const orderData = await response.json();
+
+                    if (orderData.error) {
+                      console.error("Error en la captura del pago:", orderData.error);
+                      window.location.href = "/error";
+                    } else {
+                      console.log("Pago capturado exitosamente:", orderData);
+                      window.location.href = "/success"; // Redirige a la página de éxito
+                    }
+                  }}
+                  onError={(err) => {
+                    console.error("Error en el pago:", err);
+                    window.location.href = "/error"; // Redirige a la página de error
+                  }}
+                />
               </div>
             </div>
           </div>

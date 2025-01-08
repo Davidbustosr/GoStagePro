@@ -25,7 +25,7 @@ const ChecoutPrimary = () => {
     script.src =
       "https://www.paypal.com/sdk/js?client-id=AbRtp4tycN7z0V9PZhWawEgZs_R8yj6wIlsd54DQKuaySBrOOiiN5E4ToHAiOyuTDDuHtSTgRaJ3xTOb&currency=USD";
     script.async = true;
-  
+
     script.onload = () => {
       console.log("PayPal SDK cargado correctamente.");
       if (window.paypal) {
@@ -45,7 +45,7 @@ const ChecoutPrimary = () => {
               });
               const orderData = await response.json();
               console.log("Orden creada:", orderData);
-              return orderData.id;
+              return orderData.id; // Devuelve el ID de la orden creada
             },
             onApprove: async (data) => {
               const response = await fetch(`/api/paypal/capture-order`, {
@@ -54,30 +54,30 @@ const ChecoutPrimary = () => {
                 body: JSON.stringify({ orderID: data.orderID }),
               });
               const orderData = await response.json();
-  
+
               if (orderData.error) {
                 console.error("Error en la captura del pago:", orderData.error);
                 window.location.href = "/error";
               } else {
                 console.log("Pago capturado exitosamente:", orderData);
-                window.location.href = "/success";
+                window.location.href = "/success"; // Redirige al éxito
               }
             },
             onError: (err) => {
               console.error("Error en el pago:", err);
-              window.location.href = "/error";
+              window.location.href = "/error"; // Redirige al error
             },
           })
-          .render(paypalRef.current);
+          .render(paypalRef.current); // Renderiza el botón de PayPal
       }
     };
-  
+
     script.onerror = () => {
       console.error("Error al cargar el SDK de PayPal.");
     };
-  
+
     document.body.appendChild(script);
-  
+
     return () => {
       // Limpia el script si el componente se desmonta
       document.body.removeChild(script);
@@ -152,6 +152,7 @@ const ChecoutPrimary = () => {
                   marginTop: "20px",
                 }}
               >
+                {/* Renderiza el botón de PayPal */}
                 <div ref={paypalRef}></div>
               </div>
             </div>

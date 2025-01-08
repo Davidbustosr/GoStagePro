@@ -1,4 +1,5 @@
-const fetch = require("node-fetch");
+// /pages/api/paypal/capture-payment.js
+import fetch from 'node-fetch';
 
 async function generatePayPalToken() {
   const clientId = process.env.CLIENT_ID;
@@ -17,7 +18,7 @@ async function generatePayPalToken() {
   if (!data.access_token) {
     throw new Error("Error al generar el token de PayPal");
   }
-  return data.access_token; // Devuelve el token dinámico
+  return data.access_token;
 }
 
 export default async function handler(req, res) {
@@ -25,7 +26,7 @@ export default async function handler(req, res) {
     const { orderID } = req.body;
 
     try {
-      const token = await generatePayPalToken(); // Generar token dinámico
+      const token = await generatePayPalToken();
 
       const response = await fetch(
         `https://api-m.sandbox.paypal.com/v2/checkout/orders/${orderID}/capture`,

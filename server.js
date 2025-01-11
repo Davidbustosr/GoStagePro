@@ -25,7 +25,9 @@ app.use(express.json()); // Middleware para analizar cuerpos JSON en solicitudes
 // Rutas
 app.use("/api/auth", authRoutes); // Define las rutas de autenticación bajo el prefijo /api/auth
 app.use("/api/protected", protectedRoutes); // Define las rutas protegidas bajo el prefijo /api/protected
-
+console.log('Mongo URI:', process.env.MONGO_URI);
+console.log('JWT Secret:', process.env.JWT_SECRET);
+console.log('PayPal Client ID:', process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID);
 // Configuración del puerto
 const PORT = process.env.PORT || 5001; // Toma el puerto de las variables de entorno o usa el 5001 por defecto
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // Inicia el servidor en el puerto especificado

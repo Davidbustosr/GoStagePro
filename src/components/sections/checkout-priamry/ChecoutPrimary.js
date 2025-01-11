@@ -1,5 +1,6 @@
 "use client";
-import { PayPalButtons } from "@paypal/react-paypal-js"; 
+
+import PayPalCheckout from "@/components/sections/checkout-priamry/PayPalScriptProvider";
 import countTotalPrice from "@/libs/countTotalPrice";
 import getAllProducts from "@/libs/getAllProducts";
 import { useCartContext } from "@/providers/CartContext";
@@ -92,44 +93,9 @@ const ChecoutPrimary = () => {
                   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
                   marginTop: "20px",
                 }}
-              >
-                {/* Botón de PayPal */}
-                <PayPalButtons
-                  style={{ layout: "vertical", color: "gold" }}
-                  createOrder={async () => {
-                    // Llamas a tu API para crear la orden
-                    // (usa tu endpoint /api/paypal/create-order como hacías antes)
-                    const response = await fetch("/api/paypal/create-order", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ total: totalPrice }),
-                    });
-                    const orderData = await response.json();
-                    console.log("Orden creada:", orderData);
-                    return orderData.id; // Devuelve el ID de la orden creada
-                  }}
-                  onApprove={async (data) => {
-                    // Llamas a tu API para capturar la orden
-                    const response = await fetch(`/api/paypal/capture-order`, {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ orderID: data.orderID }),
-                    });
-                    const orderData = await response.json();
-
-                    if (orderData.error) {
-                      console.error("Error en la captura del pago:", orderData.error);
-                      window.location.href = "/error";
-                    } else {
-                      console.log("Pago capturado exitosamente:", orderData);
-                      window.location.href = "/success"; // Redirige a la página de éxito
-                    }
-                  }}
-                  onError={(err) => {
-                    console.error("Error en el pago:", err);
-                    window.location.href = "/error"; // Redirige a la página de error
-                  }}
-                />
+              >                
+                {/* Contenedor donde se mostrará el botón de PayPal */}
+                <PayPalCheckout totalPrice={totalPrice} />
               </div>
             </div>
           </div>
